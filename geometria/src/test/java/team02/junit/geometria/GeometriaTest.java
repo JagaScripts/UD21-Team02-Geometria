@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import team02.junit.geometria.dto.Geometria;
 
@@ -105,19 +107,27 @@ class GeometriaTest {
 		
 	}
 	
-	@Test
-	public void testStringFigura() {
+	private static Stream<Arguments> getFormatFixture(){
+		return Stream.of(
+				Arguments.of(1,"cuadrado"),
+				Arguments.of(2,"Circulo"),
+				Arguments.of(3,"Triangulo"),
+				Arguments.of(4,"Rectangulo"),
+				Arguments.of(5,"Pentagono"),
+				Arguments.of(6,"Rombo"),
+				Arguments.of(7,"Romboide"),
+				Arguments.of(8,"Trapecio"),
+				Arguments.of(9,"Default"));
+	}
+	
+	@ParameterizedTest
+	@MethodSource("getFormatFixture")
+	public void testStringFigura(int a, String f) {
 		
-		assertEquals("cuadrado", geometria.figura(1));
-		assertEquals("Circulo", geometria.figura(2));
-		assertEquals("Triangulo", geometria.figura(3));
-		assertEquals("Rectangulo", geometria.figura(4));
-		assertEquals("Pentagono", geometria.figura(5));
-		assertEquals("Rombo", geometria.figura(6));
-		assertEquals("Romboide", geometria.figura(7));
-		assertEquals("Trapecio", geometria.figura(8));
-		assertEquals("Default", geometria.figura(0));
+		String resultado = geometria.figura(a);
+		String esperado = f;
 		
+		assertEquals(esperado, resultado);
 	}
 	
 	@Test
